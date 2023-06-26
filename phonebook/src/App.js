@@ -2,32 +2,67 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas'}
-  ]) 
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ])
+  const [filtered, setNewFiltered] = useState('')
   const [newName, setNewName] = useState('')
-
-  const handleInputChange = (event) => {
+  const [newNumber, setNewNumber] = useState('')
+  
+  const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
   
-  const addName = (event) => {
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+  
+  const filterNames = (event) => {
+    setNewFiltered(event.target.value)
+  }
+
+  const addPerson = (event) => {
     event.preventDefault()
-    const newPerson = {
-      name: newName
+    
+    if (persons.find(person => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+      
+    } else {
+      const newPerson = { 
+        name: newName,
+        number: newNumber,
+      }
+      setPersons(persons.concat(newPerson))
+      
     }
     
     setNewName('')
-    setPersons(persons.concat(newPerson))
+    setNewNumber('')
   }
+  
+  const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(filtered))
   
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      filter shown with <input
+        value={filtered}
+        onChange={filterNames}
+      />
+      <h2>add a new</h2>
+      <form onSubmit={addPerson}>
         <div>
           name: <input
             value={newName}
-            onChange={handleInputChange}
+            onChange={handleNameChange}
+          />
+        </div>
+        <div>
+          number: <input 
+            value={newNumber}
+            onChange={handleNumberChange}
           />
         </div>
         <div>
@@ -35,7 +70,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name}</p>)}
+      {filteredPersons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
     </div>
   )
 }
