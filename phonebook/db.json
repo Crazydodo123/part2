@@ -12,28 +12,13 @@
     },
     {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "number": "420",
       "id": 3
     },
     {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
-    },
-    {
-      "name": "hello",
-      "number": "joe",
-      "id": 5
-    },
-    {
-      "name": "hi",
-      "number": "joe",
-      "id": 6
-    },
-    {
-      "name": "huello",
-      "number": "joe",
-      "id": 7
     }
   ]
 }

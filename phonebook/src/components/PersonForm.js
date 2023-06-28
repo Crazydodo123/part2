@@ -21,7 +21,16 @@ const PersonForm = ({
     event.preventDefault()
     
     if (persons.find(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const oldPerson = persons.find(person => person.name === newName)
+        const newPerson = { ...oldPerson, 'number': newNumber}
+        
+        PersonServices
+          .update(newPerson.id, newPerson)
+          .then(returnedPerson => setPersons(persons.map(person => {
+            return person.name === newName ? returnedPerson : person
+          })))
+      }
       
     } else {
       const newPerson = { 
@@ -30,7 +39,7 @@ const PersonForm = ({
       }
       
       PersonServices
-        .addPerson(newPerson)
+        .create(newPerson)
         .then(response => setPersons(persons.concat(response)))
     }
     
